@@ -1,0 +1,50 @@
+1. use my_first_db
+
+2. db.createCollection("students")
+
+3. db.students.insert({name: "Bre", home_state: "Arizona", lucky_number: 10, birthday: {month: 7, day: 10, year: 1996}})
+    db.students.insert({name: "maddie", home_state: "Washington", lucky_number: 2, birthday: {month: 4, day: 6, year: 1995}})
+
+4. > db.students.find({}).pretty()
+{
+	"_id" : ObjectId("600224f3dac0ee5a43ccedda"),
+	"name" : "maddie",
+	"home_state" : "Washington",
+	"lucky_number" : 2,
+	"birthday" : {
+		"month" : 4,
+		"day" : 6,
+		"year" : 1995
+	}
+}
+
+5. db.students.find({home_state: "Washington"})
+{ "_id" : ObjectId("600224f3dac0ee5a43ccedda"), "name" : "maddie", "home_state" : "Washington", "lucky_number" : 2, "birthday" : { "month" : 4, "day" : 6, "year" : 1995 } }
+{ "_id" : ObjectId("60022579dac0ee5a43cceddd"), "name" : "Lauren", "home_state" : "Washington", "lucky_number" : 67, "birthday" : { "month" : 12, "day" : 8, "year" : 1992 } }
+
+6. db.students.find({lucky_number: {$gte: 3}})
+{ "_id" : ObjectId("60022519dac0ee5a43cceddb"), "name" : "Bre", "home_state" : "Arizona", "lucky_number" : 10, "birthday" : { "month" : 7, "day" : 10, "year" : 1996 } }
+{ "_id" : ObjectId("60022553dac0ee5a43cceddc"), "name" : "CJ", "home_state" : "California", "lucky_number" : 3, "birthday" : { "month" : 3, "day" : 12, "year" : 1992 } }
+{ "_id" : ObjectId("60022579dac0ee5a43cceddd"), "name" : "Lauren", "home_state" : "Washington", "lucky_number" : 67, "birthday" : { "month" : 12, "day" : 8, "year" : 1992 } }
+
+7. db.students.find({lucky_number: {$lte: 10}})
+{ "_id" : ObjectId("600224f3dac0ee5a43ccedda"), "name" : "maddie", "home_state" : "Washington", "lucky_number" : 2, "birthday" : { "month" : 4, "day" : 6, "year" : 1995 } }
+{ "_id" : ObjectId("60022519dac0ee5a43cceddb"), "name" : "Bre", "home_state" : "Arizona", "lucky_number" : 10, "birthday" : { "month" : 7, "day" : 10, "year" : 1996 } }
+{ "_id" : ObjectId("60022553dac0ee5a43cceddc"), "name" : "CJ", "home_state" : "California", "lucky_number" : 3, "birthday" : { "month" : 3, "day" : 12, "year" : 1992 } }
+{ "_id" : ObjectId("60022598dac0ee5a43ccedde"), "name" : "Heather", "home_state" : "Dallas", "lucky_number" : 0, "birthday" : { "month" : 7, "day" : 12, "year" : 1996 } }
+
+8. adding an "interest" field to all students with 3 values all in ONE operation------
+db.students.updateMany({}, {$push: {interests: {$each: ["coding", "brunch", "MongoDB"]}}})
+
+9. db.students.update({"_id" : ObjectId("60022579dac0ee5a43cceddd")}, {$push: {interests: "knitting"}})
+
+10. add taxes to interests on one student
+ db.students.update({"_id" : ObjectId("60022579dac0ee5a43cceddd")}, {$push: {interests: "taxes"}})
+
+11. delete the taxes:
+ db.students.update({"_id" : ObjectId("60022579dac0ee5a43cceddd")}, {$pop: {interests: (1)}})
+
+12. > db.students.remove({home_state: "California"})
+
+13. db.students.remove({name: "maddie"})
+
